@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHARK BOTS - Sua Loja de Discord Completa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .shark-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .shark-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+
+        .shark-wave .shape-fill {
+            fill: #1E3A8A;
+        }
+
+        .shark-bg {
+            background: linear-gradient(135deg, #1E3A8A 0%, #172554 100%);
+        }
+
+        .shark-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .shark-button {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shark-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.6);
+        }
+
+        .shark-button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .shark-button::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .shark-button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .shark-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .shark-teeth {
+            position: relative;
+        }
+
+        .shark-teeth:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg width='20' height='10' viewBox='0 0 20 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 L5 0 L10 10 L15 0 L20 10 Z' fill='%231E3A8A' /%3E%3C/svg%3E") repeat-x;
+            background-size: 20px 10px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .shark-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-100">
+    <!-- Navigation -->
+    <nav class="shark-bg text-white p-4 fixed w-full z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-shark text-3xl mr-2 text-blue-300"></i>
+                <h1 class="text-2xl font-bold">SHARK BOTS</h1>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:text-blue-300 transition">Início</a>
+                <a href="#about" class="hover:text-blue-300 transition">Sobre Nós</a>
+                <a href="#features" class="hover:text-blue-300 transition">Recursos</a>
+                <a href="#join" class="hover:text-blue-300 transition">Discord</a>
+            </div>
+            <button class="md:hidden text-xl" id="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="md:hidden hidden container mx-auto mt-2" id="mobile-menu">
+            <div class="flex flex-col space-y-2">
+                <a href="#home" class="hover:text-blue-300 transition">Início</a>
+                <a href="#about" class="hover:text-blue-300 transition">Sobre Nós</a>
+                <a href="#features" class="hover:text-blue-300 transition">Recursos</a>
+                <a href="#join" class="hover:text-blue-300 transition">Discord</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="shark-bg text-white pt-24 pb-20 relative">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+                    Domine o <span class="text-blue-300">oceano</span> digital com a SHARK BOTS
+                </h1>
+                <p class="text-xl mb-8 text-blue-100">
+                    A loja definitiva para turbinar seu servidor no Discord com os melhores bots e ferramentas.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button id="learn-more-btn" class="shark-button py-3 px-6 rounded-full font-bold text-white">
+                        Saiba Mais <i class="fas fa-chevron-down ml-2"></i>
+                    </button>
+                    <button id="meet-us-btn" class="bg-white text-blue-800 py-3 px-6 rounded-full font-bold border border-blue-800 hover:bg-blue-50 transition">
+                        Conheça a Loja <i class="fas fa-chevron-down ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://cdn.dribbble.com/users/1299919/screenshots/15143082/media/9cdd70fd9c7df2c5b10a7cb4a3caf1e9.png" 
+                     alt="Shark mascote" 
+                     class="w-64 md:w-96 shark-float">
+            </div>
+        </div>
+        <div class="shark-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.24,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,931.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Learn More Content (Hidden by default) -->
+    <section id="learn-more-content" class="py-16 bg-white hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Descubra o <span class="text-blue-600">poder</span> dos bots da SHARK BOTS
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Nossas soluções foram projetadas para oferecer a melhor experiência para administradores e membros de servidores Discord.
+                </p>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center gap-8 mb-16">
+                <a href="#join" class="shark-button py-4 px-8 rounded-full font-bold text-white text-lg transition-all transform hover:scale-105 text-center">
+                    Acesse Nosso Discord <i class="fab fa-discord ml-2"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="shark-card p-6 rounded-xl shark-shadow transition-all transform hover:-translate-y-2">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800">Desempenho Excepcional</h3>
+                    <p class="text-gray-600">
+                        Nossos bots são otimizados para oferecer o máximo de desempenho com o mínimo de consumo de recursos.
+                    </p>
+                </div>
+                <div class="shark-card p-6 rounded-xl shark-shadow transition-all transform hover:-translate-y-2">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800">Segurança Robust</h3>
+                    <p class="text-gray-600">
+                        Proteção avançada contra raids, spam e outros perigos que ameaçam a saúde do seu servidor.
+                    </p>
+                </div>
+                <div class="shark-card p-6 rounded-xl shark-shadow transition-all transform hover:-translate-y-2">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800">Personalização Total</h3>
+                    <p class="text-gray-600">
+                        Adapte nossos bots exatamente às necessidades do seu servidor com infinitas opções de configuração.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Us Content (Hidden by default) -->
+    <section id="meet-us-content" class="py-16 bg-gray-50 hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 shark-teeth">
+                    Conheça a <span class="text-blue-600">SHARK BOTS</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Mais do que uma loja, somos uma comunidade dedicada a melhorar sua experiência no Discord.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="fade-in">
+                    <img src="https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" 
+                         alt="Discord Community" 
+                         class="rounded-xl shadow-lg w-full h-auto">
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Nossa História</h3>
+                    <p class="text-gray-600 mb-4">
+                        A SHARK BOTS nasceu da paixão por criar soluções inovadoras para comunidades no Discord. 
+                        Desde 2024, estamos desenvolvendo bots que fazem a diferença em milhares de servidores.
+                    </p>
+                    <p class="text-gray-600 mb-4">
+                        Nossa equipe de desenvolvedores e especialistas em comunidade trabalha incansavelmente para 
+                        entregar produtos que realmente resolvem os problemas dos administradores de servidores.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="fade-in order-1 md:order-2">
+                    <img src="https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" 
+                         alt="Discord Bots" 
+                         class="rounded-xl shadow-lg w-full h-auto">
+                </div>
+                <div class="fade-in order-1">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Nossa Filosofia</h3>
+                    <p class="text-gray-600 mb-4">
+                        Nossa loja oferece uma variedade de bots especializados para diferentes necessidades:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <h4 class="font-bold text-blue-700 mb-2">Shark Mod</h4>
+                            <p class="text-sm text-gray-600">Sistema completo de moderação com IA para detecção de toxidade e spam</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <h4 class="font-bold text-blue-700 mb-2">Shark Level</h4>
+                            <p class="text-sm text-gray-600">Sistema avançado de níveis e recompensas para engajar sua comunidade</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <h4 class="font-bold text-blue-700 mb-2">Shark Tickets</h4>
+                            <p class="text-sm text-gray-600">Sistema de tickets totalmente customizável para suporte e atendimento</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <h4 class="font-bold text-blue-700 mb-2">Shark Music</h4>
+                            <p class="text-sm text-gray-600">Bot de música com qualidade premium e sem delay</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-600 mb-4">
+                        Acreditamos que um bom bot deve ser como um tubarão no oceano: eficiente, ágil e indispensável 
+                        para o ecossistema do servidor. Por isso, nossos produtos são pensados para serem:
+                    </p>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                            <span>Intuitivos e fáceis de usar</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                            <span>Altamente personalizáveis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                            <span>Constante e rápida evolução</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                            <span>Totalmente dedicados à comunidade</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Discord Section -->
+    <section id="join" class="py-20 shark-bg text-white relative">
+        <div class="container mx-auto px-4 text-center">
+            <i class="fab fa-discord text-6xl mb-6 text-blue-300"></i>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Entre na nossa comunidade no <span class="text-blue-300">Discord</span>
+            </h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto text-blue-100">
+                Junte-se a milhares de administradores que já estão transformando seus servidores com nossos bots.
+            </p>
+            <a href="https://discord.gg/FvFDyRFpU9" target="_blank" class="inline-block shark-button py-4 px-10 rounded-full font-bold text-lg hover:shadow-lg transition">
+                Entrar no Discord <i class="fab fa-discord ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0 flex items-center">
+                    <i class="fas fa-shark text-3xl mr-2 text-blue-300"></i>
+                    <h2 class="text-2xl font-bold">SHARK BOTS</h2>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://discord.gg/FvFDyRFpU9" target="_blank" class="text-xl hover:text-blue-300 transition">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="#" class="text-xl hover:text-blue-300 transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-xl hover:text-blue-300 transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 SHARK BOTS. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Learn More button functionality
+        document.getElementById('learn-more-btn').addEventListener('click', function() {
+            // Hide meet us content if visible
+            document.getElementById('meet-us-content').classList.add('hidden');
+            
+            // Toggle learn more content
+            const content = document.getElementById('learn-more-content');
+            content.classList.toggle('hidden');
+            
+            if (!content.classList.contains('hidden')) {
+                content.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Meet Us button functionality
+        document.getElementById('meet-us-btn').addEventListener('click', function() {
+            // Hide learn more content if visible
+            document.getElementById('learn-more-content').classList.add('hidden');
+            
+            // Toggle meet us content
+            const content = document.getElementById('meet-us-content');
+            content.classList.toggle('hidden');
+            
+            if (!content.classList.contains('hidden')) {
+                content.scrollIntoView({ behavior: 'smooth' });
+                // Animate elements in
+                setTimeout(() => {
+                    document.querySelectorAll('#meet-us-content .fade-in').forEach(el => {
+                        el.classList.add('active');
+                    });
+                }, 300);
+            }
+        });
+          // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+                      entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+               }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => {observer.observe(el);
+        });
+      </script>
+</body>
+</html>
