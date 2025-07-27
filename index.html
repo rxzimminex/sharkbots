@@ -11,47 +11,114 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron:wght@700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        poppins: ["Poppins", "sans-serif"],
-                        orbitron: ["Orbitron", "sans-serif"],
-                        montserrat: ["Montserrat", "sans-serif"]
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    poppins: ["Poppins", "sans-serif"],
+                    orbitron: ["Orbitron", "sans-serif"],
+                    montserrat: ["Montserrat", "sans-serif"]
+                },
+                colors: {
+                    shark: {
+                        400: '#1a9bff',
+                        500: '#0077e6',
+                        800: '#00264d'
                     },
-                    colors: {
-                        shark: {
-                            400: '#1a9bff',
-                            500: '#0077e6',
-                            800: '#00264d'
-                        }
-                    }
+                    shine: '#60efff'
                 }
             }
         }
+    }
     </script>
     <style>
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg,#0a2540 0%,#0d3b66 100%); color:#fff; }
-        h1,h2,h3,h4 { font-family:'Orbitron',sans-serif; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg,#0a2540 0%,#0d3b66 100%);
+            color:#fff;
+            position:relative;
+            overflow-x:hidden;
+        }
+        h1, h2, h3, h4 {
+            font-family:'Orbitron',sans-serif;
+            letter-spacing:1px;
+        }
         .floating { animation: floating 3s ease-in-out infinite; }
-        @keyframes floating { 0%{transform:translateY(0);} 50%{transform:translateY(-15px);} 100%{transform:translateY(0);} }
-        .discord-btn { transition:all .3s; }
-        .discord-btn:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(88,101,242,0.5); }
-        .feature-card { transition:all .3s; }
-        .feature-card:hover { transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,119,230,0.2); }
+        @keyframes floating {
+            0%{transform:translateY(0);}
+            50%{transform:translateY(-15px);}
+            100%{transform:translateY(0);}
+        }
+        .pulse {
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px 2px #60efff, 0 0 40px 8px #1a9bff33; }
+            100% { box-shadow: 0 0 20px 6px #60efff, 0 0 60px 16px #1a9bff55; }
+        }
+        .shine {
+            box-shadow: 0 0 40px 0 #60efff, 0 0 10px 2px #1a9bff;
+        }
+        .discord-btn {
+            transition:all .3s;
+            box-shadow:0 0 16px 4px #60efff55;
+        }
+        .discord-btn:hover {
+            background: linear-gradient(90deg,#60efff 0%,#0077e6 100%);
+            color:#fff;
+            box-shadow: 0 0 32px 8px #60efff, 0 0 8px 2px #1a9bff;
+            transform:translateY(-3px) scale(1.04);
+        }
+        .feature-card {
+            transition:all .3s;
+            position:relative;
+            background: linear-gradient(135deg, #0077e6bb, #60efff22 80%);
+            border: 1px solid rgba(0, 119, 230, 0.3);
+            box-shadow:0 0 14px 2px #1a9bff44;
+        }
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: -18px; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 16px;
+            background: radial-gradient(circle,#60efff88 25%,transparent 70%);
+            filter: blur(2px);
+            pointer-events:none;
+        }
+        .feature-card:hover {
+            transform:translateY(-8px) scale(1.04);
+            border-color: #60efff;
+            box-shadow: 0 0 40px 10px #60efff55;
+        }
+        .title-glow {
+            text-shadow: 0 0 18px #60efff, 0 0 8px #1a9bff;
+        }
+        .modal-glow {
+            box-shadow: 0 0 40px 8px #60efff55, 0 0 12px 2px #1a9bff;
+        }
+        .svg-brilho {
+            filter: blur(8px) brightness(1.3);
+            opacity:0.7;
+            pointer-events:none;
+        }
         a:focus, button:focus { outline:2px solid #1a9bff; outline-offset:2px; }
     </style>
 </head>
 <body>
+    <!-- Brilho decorativo topo -->
+    <svg class="absolute top-0 left-1/2 -translate-x-1/2 svg-brilho" width="500" height="80" viewBox="0 0 500 80">
+      <ellipse cx="250" cy="40" rx="220" ry="18" fill="#60efff" />
+    </svg>
     <!-- Header -->
     <header class="py-6 px-4" aria-label="Cabeçalho do site">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-shark-500 rounded-full flex items-center justify-center floating">
+                <div class="w-12 h-12 bg-shark-500 rounded-full flex items-center justify-center floating shine">
                     <i class="fas fa-shark text-white text-2xl"></i>
                 </div>
-                <h1 class="text-2xl md:text-3xl font-bold text-white"><span class="text-shark-400">Shark</span>Bots</h1>
+                <h1 class="text-2xl md:text-3xl font-bold text-white title-glow"><span class="text-shark-400">Shark</span>Bots</h1>
             </div>
             <nav class="hidden md:flex space-x-8" aria-label="Menu principal">
                 <a href="#" class="text-shark-400 hover:text-white transition" aria-label="Início">Início</a>
@@ -59,23 +126,22 @@
                 <a href="#sobre" class="text-shark-400 hover:text-white transition" aria-label="Sobre">Sobre</a>
                 <a href="#contato" class="text-shark-400 hover:text-white transition" aria-label="Contato">Contato</a>
             </nav>
-            <a href="https://discord.gg/kvm8fTmzjJ" target="_blank" class="discord-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-full flex items-center" aria-label="Entrar no Discord">
+            <a href="https://discord.gg/kvm8fTmzjJ" target="_blank" class="discord-btn pulse bg-indigo-600 text-white font-bold py-2 px-6 rounded-full flex items-center" aria-label="Entrar no Discord">
                 <i class="fab fa-discord mr-2"></i> Entrar no Discord
             </a>
         </div>
     </header>
-
     <!-- Hero -->
-    <section class="relative py-20 px-4" aria-label="Apresentação">
+    <section class="relative py-20 px-4 overflow-hidden" aria-label="Apresentação">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="text-center lg:text-left">
-                <h1 class="text-4xl md:text-6xl font-bold mb-6">Bots <span class="text-shark-400">Premium</span> para seu Servidor</h1>
-                <p class="text-xl text-shark-400 mb-10">Aumente o engajamento da sua comunidade com nossos poderosos bots de vendas, tickets e automações.</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 title-glow animate-pulse">Bots <span class="text-shark-400">Premium</span> para seu Servidor</h1>
+                <p class="text-xl text-shark-400 mb-10 animate-fade-in">Aumente o engajamento da sua comunidade com nossos poderosos bots de vendas, tickets e automações.</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="https://discord.gg/kvm8fTmzjJ" target="_blank" class="discord-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-full text-lg flex items-center">
+                    <a href="https://discord.gg/kvm8fTmzjJ" target="_blank" class="discord-btn pulse bg-indigo-600 text-white font-bold py-4 px-8 rounded-full text-lg flex items-center">
                         <i class="fab fa-discord mr-3"></i> Começar no Discord
                     </a>
-                    <a href="javascript:void(0);" onclick="abrirModal()" class="bg-transparent border-2 border-shark-500 text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-shark-800 transition" aria-label="Saiba Mais">
+                    <a href="javascript:void(0);" onclick="abrirModal()" class="bg-transparent border-2 border-shark-500 text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-shark-800 transition pulse shine" aria-label="Saiba Mais">
                         Saiba Mais
                     </a>
                 </div>
@@ -84,31 +150,31 @@
                 <div class="relative w-full max-w-lg">
                     <div class="absolute -top-10 -right-10 w-64 h-64 bg-shark-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-70"></div>
                     <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-indigo-600 rounded-full mix-blend-soft-light filter blur-3xl opacity-70"></div>
-                    <div class="relative bg-shark-800 border border-shark-500 rounded-2xl p-8 shadow-2xl floating">
+                    <div class="relative bg-shark-800 border border-shark-500 rounded-2xl p-8 shadow-2xl floating feature-card shine">
                         <div class="flex items-center mb-6">
-                            <div class="w-12 h-12 rounded-full bg-shark-500 flex items-center justify-center mr-4">
+                            <div class="w-12 h-12 rounded-full bg-shark-500 flex items-center justify-center mr-4 shine">
                                 <i class="fas fa-ticket-alt text-shark-400"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold">Tickets</h3>
+                                <h3 class="text-xl font-bold title-glow">Tickets</h3>
                                 <p class="text-shark-400">Suporte simplificado e organizado</p>
                             </div>
                         </div>
                         <div class="flex items-center mb-6">
-                            <div class="w-12 h-12 rounded-full bg-shark-500 flex items-center justify-center mr-4">
+                            <div class="w-12 h-12 rounded-full bg-shark-500 flex items-center justify-center mr-4 shine">
                                 <i class="fas fa-chart-line text-shark-400"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold">Automação de Vendas</h3>
+                                <h3 class="text-xl font-bold title-glow">Automação de Vendas</h3>
                                 <p class="text-shark-400">Venda automática e segura</p>
                             </div>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-12 h-12 rounded-full bg-shark-500 flex items-center justify-center mr-4">
+                            <div class="w-12 h-12 rounded-full bg-shark-500 flex items-center justify-center mr-4 shine">
                                 <i class="fas fa-cogs text-shark-400"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold">Soluções Personalizadas</h3>
+                                <h3 class="text-xl font-bold title-glow">Soluções Personalizadas</h3>
                                 <p class="text-shark-400">Bot sob medida para sua comunidade</p>
                             </div>
                         </div>
@@ -116,13 +182,16 @@
                 </div>
             </div>
         </div>
+        <!-- Brilho decorativo fundo -->
+        <svg class="absolute bottom-0 left-1/2 -translate-x-1/2 svg-brilho" width="750" height="120" viewBox="0 0 750 120">
+            <ellipse cx="375" cy="60" rx="340" ry="25" fill="#60efff" />
+        </svg>
     </section>
-
     <!-- Modal Saiba Mais -->
     <div id="saibaMaisModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
-        <div class="bg-shark-800 rounded-2xl p-8 max-w-xl w-full text-white relative">
-            <button onclick="fecharModal()" class="absolute top-4 right-4 text-shark-400 text-2xl font-bold hover:text-white" aria-label="Fechar">&times;</button>
-            <h2 class="text-2xl font-bold mb-4">Conheça a SharkBots!</h2>
+        <div class="bg-shark-800 rounded-2xl p-8 max-w-xl w-full text-white relative modal-glow">
+            <button onclick="fecharModal()" class="absolute top-4 right-4 text-shark-400 text-2xl font-bold hover:text-white shine" aria-label="Fechar">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 title-glow">Conheça a SharkBots!</h2>
             <p class="mb-3">A SharkBots é especialista em bots premium para Discord! Nossa loja oferece:</p>
             <ul class="list-disc ml-5 mb-3">
                 <li>Automação de vendas com integração de plataformas de pagamento</li>
@@ -134,78 +203,86 @@
             </ul>
             <p class="mb-3">Venha conhecer nossos planos e faça parte da comunidade mais inovadora do Discord!</p>
             <div class="mt-6 flex flex-col gap-2">
-                <a href="https://discord.gg/kvm8fTmzjJ" target="_blank" class="discord-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center">
+                <a href="https://discord.gg/kvm8fTmzjJ" target="_blank" class="discord-btn pulse bg-indigo-600 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center">
                     <i class="fab fa-discord mr-2"></i> Entrar na Loja Discord
                 </a>
-                <a href="https://sharkbots.com.br" target="_blank" class="bg-shark-500 hover:bg-shark-800 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center">
+                <a href="https://sharkbots.com.br" target="_blank" class="bg-shark-500 hover:bg-shark-800 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center shine">
                     <i class="fas fa-store mr-2"></i> Visitar Site Oficial
                 </a>
             </div>
         </div>
     </div>
-
     <!-- Seção de Recursos -->
-    <section id="recursos" class="py-16 px-4 bg-shark-800">
+    <section id="recursos" class="py-16 px-4 bg-shark-800 relative overflow-hidden">
+        <svg class="absolute top-0 right-0 svg-brilho" width="180" height="80" viewBox="0 0 180 80">
+            <ellipse cx="130" cy="40" rx="50" ry="10" fill="#60efff"/>
+        </svg>
         <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl font-bold mb-8 text-center">Recursos SharkBots</h2>
+            <h2 class="text-3xl font-bold mb-8 text-center title-glow">Recursos SharkBots</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="feature-card bg-shark-500 rounded-xl p-6">
-                    <i class="fas fa-ticket-alt text-3xl mb-3 text-white"></i>
-                    <h3 class="text-xl font-bold mb-2">Tickets Avançados</h3>
+                <div class="feature-card rounded-xl p-6">
+                    <i class="fas fa-ticket-alt text-3xl mb-3 text-white shine"></i>
+                    <h3 class="text-xl font-bold mb-2 title-glow">Tickets Avançados</h3>
                     <p>Com nosso sistema de tickets, o suporte nunca foi tão fácil e organizado.</p>
                 </div>
-                <div class="feature-card bg-shark-500 rounded-xl p-6">
-                    <i class="fas fa-robot text-3xl mb-3 text-white"></i>
-                    <h3 class="text-xl font-bold mb-2">Automação Total</h3>
+                <div class="feature-card rounded-xl p-6">
+                    <i class="fas fa-robot text-3xl mb-3 text-white shine"></i>
+                    <h3 class="text-xl font-bold mb-2 title-glow">Automação Total</h3>
                     <p>Bots totalmente automáticos para vendas e gerenciamento de membros.</p>
                 </div>
-                <div class="feature-card bg-shark-500 rounded-xl p-6">
-                    <i class="fas fa-cogs text-3xl mb-3 text-white"></i>
-                    <h3 class="text-xl font-bold mb-2">Personalização</h3>
+                <div class="feature-card rounded-xl p-6">
+                    <i class="fas fa-cogs text-3xl mb-3 text-white shine"></i>
+                    <h3 class="text-xl font-bold mb-2 title-glow">Personalização</h3>
                     <p>Adaptamos soluções conforme a necessidade do seu servidor!</p>
                 </div>
             </div>
         </div>
     </section>
-
     <!-- Seção Sobre -->
-    <section id="sobre" class="py-16 px-4">
+    <section id="sobre" class="py-16 px-4 relative">
+        <svg class="absolute left-0 top-0 svg-brilho" width="140" height="60" viewBox="0 0 140 60">
+            <ellipse cx="50" cy="30" rx="40" ry="9" fill="#60efff"/>
+        </svg>
         <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-6">Sobre a SharkBots</h2>
+            <h2 class="text-3xl font-bold mb-6 title-glow">Sobre a SharkBots</h2>
             <p class="text-lg mb-6">
                 Somos apaixonados por tecnologia e comunidades digitais. Nossos bots são desenvolvidos pensando sempre na segurança, automação e experiência dos usuários. Acreditamos que todo servidor Discord merece o melhor!
             </p>
         </div>
     </section>
-
     <!-- Seção Contato -->
-    <section id="contato" class="py-16 px-4 bg-shark-800">
+    <section id="contato" class="py-16 px-4 bg-shark-800 relative">
+        <svg class="absolute bottom-0 right-0 svg-brilho" width="120" height="50" viewBox="0 0 120 50">
+            <ellipse cx="90" cy="25" rx="30" ry="7" fill="#60efff"/>
+        </svg>
         <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-6">Fale conosco</h2>
+            <h2 class="text-3xl font-bold mb-6 title-glow">Fale conosco</h2>
             <p class="mb-4">Entre em contato pelo Discord ou envie um e-mail para <a href="mailto:contato@sharkbots.com.br" class="underline text-shark-400">contato@sharkbots.com.br</a></p>
-            <a href="https://discord.gg/kvm8fTmzjJ" target="_blank" class="discord-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center">
+            <a href="https://discord.gg/kvm8fTmzjJ" target="_blank" class="discord-btn pulse bg-indigo-600 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center">
                 <i class="fab fa-discord mr-2"></i> Falar no Discord
             </a>
         </div>
     </section>
-
     <!-- Footer -->
-    <footer class="py-12 px-4 border-t border-shark-800">
+    <footer class="py-12 px-4 border-t border-shark-800 relative">
+        <svg class="absolute left-0 bottom-0 svg-brilho" width="180" height="65" viewBox="0 0 180 65">
+            <ellipse cx="60" cy="32" rx="50" ry="12" fill="#60efff"/>
+        </svg>
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
             <div class="flex items-center mb-6 md:mb-0">
-                <div class="w-10 h-10 bg-shark-500 rounded-full flex items-center justify-center mr-3">
+                <div class="w-10 h-10 bg-shark-500 rounded-full flex items-center justify-center mr-3 shine">
                     <i class="fas fa-shark text-white"></i>
                 </div>
-                <h2 class="text-xl font-bold"><span class="text-shark-400">Shark</span>Bots</h2>
+                <h2 class="text-xl font-bold title-glow"><span class="text-shark-400">Shark</span>Bots</h2>
             </div>
             <div class="flex space-x-6 mb-6 md:mb-0">
-                <a href="https://discord.gg/kvm8fTmzjJ" class="text-shark-400 hover:text-white transition" aria-label="Discord">
+                <a href="https://discord.gg/kvm8fTmzjJ" class="text-shark-400 hover:text-white transition shine" aria-label="Discord">
                     <i class="fab fa-discord text-2xl"></i>
                 </a>
-                <a href="https://twitter.com/sharkbots" class="text-shark-400 hover:text-white transition" aria-label="Twitter">
+                <a href="https://twitter.com/sharkbots" class="text-shark-400 hover:text-white transition shine" aria-label="Twitter">
                     <i class="fab fa-twitter text-2xl"></i>
                 </a>
-                <a href="https://github.com/rxzimminex/sharkbots" class="text-shark-400 hover:text-white transition" aria-label="GitHub">
+                <a href="https://github.com/rxzimminex/sharkbots" class="text-shark-400 hover:text-white transition shine" aria-label="GitHub">
                     <i class="fab fa-github text-2xl"></i>
                 </a>
             </div>
@@ -216,7 +293,6 @@
             </div>
         </div>
     </footer>
-
     <script>
     function abrirModal() {
         document.getElementById('saibaMaisModal').classList.remove('hidden');
